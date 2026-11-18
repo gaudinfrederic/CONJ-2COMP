@@ -1,0 +1,2 @@
+mutation : r(5000) incremente de 1 dans certs_rtable.bin
+(offset 10024, 127 -> 128)

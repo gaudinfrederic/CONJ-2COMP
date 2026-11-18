@@ -1,0 +1,2 @@
+mutation : N(u1,u2) force a 0 sur le goulot pont-mort #0
+(le verificateur recompte N et doit rejeter)

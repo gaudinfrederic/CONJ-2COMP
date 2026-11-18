@@ -1,0 +1,12 @@
+crible 2N+2 en 0.0s (pi=148933)
+rtable reenumeree en 11.6s
+RTABLE : 1000001 valeurs comparees ; mismatches=0
+PUITS : 14088 niveaux verifies ; total puits=40436 ; mismatches=0
+PUITS_K1 : 5 puits recalcules, 5 lus ; mismatches=0
+AK_BFILE : 14089 lignes, 0 mismatches
+TAU : KCUT=7226 B_max=999958 vitaux_testes=999947 parasites=0
+GOULOTS : 951 verifies ; pont-mort=674 ; minN_pm=1 ; mismatches=0
+M1_BFILE : 0 mismatches
+==================================================
+VERDICT C (independant) N=1000000 71.5s
+  chaine : r-table + puits + goulots + tau verifies

@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ces certificats ou ce code, citez ce depot."
+title: "Verification certifiee du digraphe de re-pairage sur partitions de Goldbach : puits par niveau, goulots et temoins sur m <= 1e6"
+authors:
+  - family-names: Gaudin
+    given-names: Frederic
+    affiliation: Universite de Caen Normandie
+version: 1.0.0
+date-released: 2026-11-17
+# depot mixte : code Apache-2.0 (LICENSE-CODE) +
+# donnees/documents CC-BY-4.0 (LICENSE-DATA) - mapping : NOTICE
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+keywords:
+  - partitions de Goldbach
+  - digraphe de re-pairage
+  - representations symetriques
+  - puits
+  - goulots
+  - verification computationnelle
+  - certificats SHA-256
+  - theorie des nombres
+  - reproducibilite
+doi: 10.5281/zenodo.24335185

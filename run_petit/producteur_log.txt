@@ -1,0 +1,13 @@
+crible 2N=200000 ok
+rtable FFT ok : max r=3931
+certs_rtable.bin : 200026 octets (N+1=100001 valeurs u16)
+maxR par classe = [3931, 2095, 1902] ; Kvalid = 1902
+puits par niveau calcules (k=2..1902)
+puits k=1 : [4, 5, 6, 7, 19]
+certs_puits.bin : 38052 octets (1901 niveaux x 20 o)
+a(k) : a(1)=5 a(2)=1 ; a=2:379 niveaux, a=3:1521, >=4:1
+goulots extraits : 553 (pont-mort : 375)
+certs_goulots.bin : 13296 octets ; min N pont-mort = 1
+KCUT=1035 ; B_max=99974 (Mcut max a k=2..1035)
+passe tau : 99963 vitaux testes, parasites=[]
+stats.txt ecrit ; total 3.1s

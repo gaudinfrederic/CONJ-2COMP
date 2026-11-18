@@ -1,0 +1,2 @@
+mutation : record du niveau k=10 supprime de certs_puits.bin
+(count 1901 -> 1900 ; le verificateur doit detecter le saut de niveau)

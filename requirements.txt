@@ -1,0 +1,5 @@
+# producteur.py et verificateur.py ; le verificateur C est C99
+# pur (aucune dependance).
+# Pin exact = environnement certifie (Python 3.14.2 + numpy 2.5.2,
+# les deux sur PyPI) ; numpy >= 1.26 suffirait pour les scripts.
+numpy==2.5.2

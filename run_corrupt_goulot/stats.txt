@@ -1,0 +1,14 @@
+N=100000
+KALL(max r)=3931 ; maxR per classe=[3931, 2095, 1902] ; Kvalid=1902
+rtable_records=100001
+puits_niveaux=1901 (k=2..1902) ; puits_k1=[4, 5, 6, 7, 19]
+a(k): a1=5 a2=1 ; a=2:379 a=3:1521 a>=4:1
+goulots=553 ; pont_mort=375 ; minN_pm=1
+KCUT=1035 ; B_max=99974 ; tau_testes=99963 ; parasites=0
+temps_total=3.1s
+sha256 certs_rtable.bin = 47a8276dea947d28a01f6f7dc8e0752d8ce4594f7407a9eba4df74b835461fb9
+sha256 certs_puits.bin = dfc08b0b457cc854ac186fa45a93d505267d7ef8cbf816b5368da1c61988868a
+sha256 certs_goulots.bin = 68e081dbb2df2d89d14289c230643ab68980f8ca1dbf26c76d827ab00ab4dc37
+sha256 puits_k1.txt = 03007323e8d77ea9122e8e1997dc056e098bad031c12ac2cc70c2516e00fe9b9
+sha256 ak_bfile.txt = 5d099b38616165ba1cb693cd40da677cc9e562fb06f77b8e35985c80ae7bb9ba
+sha256 m1_bfile.txt = 5756acfc756b5aaf5bf7f77b046b3124a4a5411d1d3e9f6f1229dfe38079ee4f

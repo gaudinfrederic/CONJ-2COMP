@@ -1,0 +1,60 @@
+NOTICE - repartition des licences (CONJ-2COMP)
+
+Ce depot melange du code et des donnees ; deux licences
+distinctes s'appliquent selon les fichiers.
+
+== CODE - Apache License 2.0 (voir LICENSE-CODE) ==
+
+  producteur.py
+  verificateur.py
+  verificateur.c
+  make_corrupt.py
+  make_rtable.py
+  _texcheck.py
+  falsif_tau.py, falsif_tau_hi.py, falsif_sniper.py,
+  falsif_lambda.py, falsif_marge.py, falsif_2thick.py,
+  falsif_delta_sigma.py, falsif_goulots_danger.py,
+  margin_dist.py, test_rechute.py
+  Makefile
+  requirements.txt
+
+== DONNEES - Creative Commons Attribution 4.0, CC-BY-4.0
+== (voir LICENSE-DATA)
+
+  run_petit/  run_1e6/
+  run_corrupt_rtable/  run_corrupt_skip/
+  run_corrupt_goulot/  run_corrupt_trunc/
+    (certificats binaires certs_*.bin, *_bfile.txt,
+     puits_k1.txt, stats.txt, journaux
+     producteur/verificateur, NOTE.txt)
+  b045917.txt (b-file OEIS A045917),
+  falsif_goulots_danger_summary.json,
+  falsif_goulots_danger_res.npz, falsif_lambda_res.npz
+  (sorties de mesures),
+  manifest.json, metadata.json (metadonnees du depot),
+  SHA256SUMS.txt, SHA256SUMS-upload.txt (empreintes)
+
+== DOCUMENTS - CC-BY-4.0 ==
+
+  README.md, RAPPORT.md, SPECS_CERTS.md, ANNONCES.md,
+  FALSIFICATION.md, FALSIF-GOULOTS-DANGER.md,
+  METHODE-RTABLE-FFT.md, PERIMETRE-REDUIT.md,
+  THM-DENSE-preuve.md,
+  CITATION.cff,
+  CONJ-2COMP-paper.tex, CONJ-2COMP-paper.pdf,
+  lean-artifact/ (sources Lean de l'artefact),
+  github-ready/ (miroir du depot : chaque fichier garde
+    la licence de sa section ci-dessus)
+  + documents internes NON publies (licence identique,
+    exclus du depot plat et de l'ancillaire) : brouillons,
+    journaux de verification, scripts de depot, archives
+    de soumission, repertoires de travail.
+
+== LICENSE (fichier historique) ==
+
+  Le fichier LICENSE contient le texte integral Apache-2.0 et
+  vaut pour le code ; il est conserve pour compatibilite et
+  duplique LICENSE-CODE octet pour octet.
+
+Verification bornee, pas une preuve : aucun fichier de ce
+depot ne revendique la conjecture universelle.

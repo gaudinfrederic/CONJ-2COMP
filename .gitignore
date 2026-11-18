@@ -1,0 +1,6 @@
+verificateur
+verificateur.exe
+__pycache__/
+*.pyc
+.lake/
+*.olean

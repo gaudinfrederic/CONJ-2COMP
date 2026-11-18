@@ -1,0 +1,2 @@
+mutation : certs_puits.bin coupe a mi-record (7 octets du dernier)
+(le controle de taille doit rejeter)

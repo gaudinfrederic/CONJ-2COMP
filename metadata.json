@@ -1,0 +1,56 @@
+{
+  "title": "Certified verification of the re-pairing digraph on Goldbach partitions: wells per level, bottlenecks and witnesses up to m <= 1e6",
+  "description": "Depot de la verification certifiee CONJ-2COMP : digraphe de re-pairage sur les partitions de Goldbach hors-diagonale 2m = p + q, p < q (centre m ; S(m) = {t >= 1 : m-t et m+t premiers}, r(m) = |S(m)|, convention OEIS A061357 ; les centres m <= 1e6 couvrent les pairs 2m <= 2e6). Certificats binaires complets a N = 1e6 : table r(m) integrale (1 000 001 valeurs u16), puits par niveau k = 2..14089 avec minima de classe mu_c(k) et masques (a(1)=5, a(2)=1, a(k) in {2,3} pour k >= 3 : 1826 niveaux a 2 puits, 12261 a 3), 951 goulots (u1,u2) re-extraits avec N(u1,u2) recompte - dont 674 a pont mort, tous avec N >= 1 (min N = 1 en (6,9)) - b-files a(k) et m1(k), passe tau interieure re-jouee (999 947 vitaux testes, 0 puits interieur, k <= 7226 par fermeture M_cut). Tout est recompte par DEUX verificateurs independants (C99 par re-enumeration integrale, Python/numpy par FFT + enumerations), formats specifies dans SPECS_CERTS.md. Suite run_corrupt_* (4 mutations : rtable mutee, niveau saute, N mise a 0, record tronque) comme test anti-corruption - toutes rejetees. BOUNDED VERIFICATION, NOT A PROOF : verification exhaustive sur m <= 1e6 seulement ; a(k) <= 3 est une mesure dans la table, l'enonce global est conditionnel a l'absence de puits interieur au-dela de la table (CONJ-M ; L_k fini ne ferme que la queue) ; N >= 1 est mesure sur les goulots a portee, conjecture generale ouverte. Independante de la conjecture de Goldbach binaire, qui n'intervient que comme seuil de queue non prouve L_1 fini (k = 1).",
+  "upload_type": "dataset",
+  "creators": [
+    {
+      "name": "Gaudin, Frederic",
+      "affiliation": "Universite de Caen Normandie"
+    }
+  ],
+  "license": {
+    "id": "CC-BY-4.0"
+  },
+  "notes": "Code sous Apache-2.0 (LICENSE-CODE) ; donnees et documents sous CC-BY-4.0 (LICENSE-DATA) - mapping dans NOTICE.",
+  "keywords": [
+    "Goldbach partitions",
+    "prime pairs",
+    "OEIS A061357",
+    "re-pairing digraph",
+    "symmetric representations",
+    "wells",
+    "bottlenecks",
+    "certified computation",
+    "verification exhaustive",
+    "certificats SHA-256",
+    "number theory",
+    "reproductibilite"
+  ],
+  "version": "1.0.0",
+  "related_identifiers": [
+    {
+      "identifier": "https://oeis.org/A061357",
+      "relation": "documents",
+      "resource_type": "other",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://oeis.org/A045917",
+      "relation": "references",
+      "resource_type": "other",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://oeis.org/A000954",
+      "relation": "references",
+      "resource_type": "other",
+      "scheme": "url"
+    }
+  ],
+  "custom": {
+    "code:verifierIndependent": "2 (C99 + Python/numpy, recomptage complet)",
+    "data:certFormat": "RT2C/PU2C/GO2C v1, spec dans SPECS_CERTS.md",
+    "data:coverageInterval": "m <= 1000000, niveaux k <= 14089",
+    "data:measurements": "a(k) in {2,3} k>=3 ; 674/674 goulots pont-mort avec N>=1 ; 0 puits interieur"
+  }
+}

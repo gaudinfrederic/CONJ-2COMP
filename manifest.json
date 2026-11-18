@@ -1,0 +1,82 @@
+{
+  "title": "Certificats de verification - digraphe de re-pairage sur partitions de Goldbach (CONJ-2COMP)",
+  "conjecture": "CONJ-2COMP",
+  "objects": {
+    "r(m)": "nombre de t >= 1 avec m-t et m+t premiers (A061357)",
+    "puits": "sommet de V_k sans enfant retenu ; a(k) = #puits niveau k",
+    "goulots": "paires (u1,u2) de vitaux consecutifs de meme classe mod 3 ; N(u1,u2) temoins quadruplets",
+    "tau": "passe interieure tau = min(r(m), R_prev[classe]) ; L_k, M_cut"
+  },
+  "formats": "RT2C/PU2C/GO2C v1 (voir SPECS_CERTS.md)",
+  "machine": {
+    "cpu": "x86_64 Windows (Git Bash)",
+    "python": "3.14.2",
+    "numpy": "2.5.2",
+    "compiler": "gcc 15 (win32, C99, -O2)"
+  },
+  "runs": [
+    {
+      "dir": "run_petit",
+      "N": 100000,
+      "role": "smoke test / regression",
+      "command_verify_c": "verificateur.exe 100000 run_petit",
+      "command_verify_py": "python verificateur.py 100000 run_petit",
+      "producer_seconds": 3.1,
+      "results": {
+        "Kvalid": 1902,
+        "puits_k1": [4, 5, 6, 7, 19],
+        "a1": 5, "a2": 1,
+        "a_eq2_kge3": 379, "a_eq3_kge3": 1521, "a_ge4_kge3": 0,
+        "goulots": 553, "goulots_pont_mort": 375, "minN_pont_mort": 1,
+        "KCUT": 1035, "B_max": 99974, "tau_testes": 99963, "puits_interieurs": 0
+      }
+    },
+    {
+      "dir": "run_1e6",
+      "N": 1000000,
+      "role": "run principal",
+      "command_verify_c": "verificateur.exe 1000000 run_1e6",
+      "command_verify_py": "python verificateur.py 1000000 run_1e6",
+      "producer_seconds": 204.1,
+      "verifier_c_seconds": 112.6,
+      "verifier_py_seconds": 258.3,
+      "results": {
+        "Kvalid": 14089,
+        "maxR_par_classe": [27988, 14608, 14089],
+        "puits_k1": [4, 5, 6, 7, 19],
+        "a1": 5, "a2": 1,
+        "a_eq2_kge3": 1826, "a_eq3_kge3": 12261, "a_ge4_kge3": 0,
+        "fenetres_2puits": 52, "derniere_fenetre": [14021, 14089],
+        "goulots": 951, "goulots_pont_mort": 674, "minN_pont_mort": 1,
+        "goulot_min": [6, 9],
+        "KCUT": 7226, "B_max": 999958, "tau_testes": 999947, "puits_interieurs": 0
+      },
+      "sha256_prefix": {
+        "certs_rtable.bin": "92cff4ec6dd3a364",
+        "certs_puits.bin": "dfc739f644d1d269",
+        "certs_goulots.bin": "fb6cd7b359fabe8a",
+        "ak_bfile.txt": "2e00ee2fc7c5f952",
+        "m1_bfile.txt": "31a198c92cf369e2",
+        "puits_k1.txt": "03007323e8d77ea9"
+      },
+      "verdict": "0 divergence rtable ; 14088 niveaux puits verifies ; 951 goulots re-extraits, N recompte ; 0 puits interieur (k<=7226 par M_cut)"
+    }
+  ],
+  "limitations": [
+    "verification bornee a m <= 1e6 - bounded verification, not a proof",
+    "a(k) in {2,3} pour k>=3 : mesure dans la table, pas un theoreme global",
+    "#puits(V_k) <= 3 sur N entier : conditionnel a l'absence de puits interieur au-dela de la table (CONJ-M ; L_k fini ne ferme que la queue)",
+    "N(u1,u2) >= 1 sur les 674 goulots pont-mort : mesure finie, conjecture ouverte",
+    "modele HL ~1e-75 : somme convergente du modele, caveat Maier 1985"
+  ],
+  "corruption_suite": {
+    "regen": "python make_corrupt.py run_petit",
+    "fixtures": [
+      "run_corrupt_rtable (r(5000)+1)",
+      "run_corrupt_skip (niveau k=10 supprime)",
+      "run_corrupt_goulot (N mise a 0 sur pont-mort)",
+      "run_corrupt_trunc (puits.bin coupe a mi-record)"
+    ],
+    "expected": "rejet exit != 0 par les deux verificateurs"
+  }
+}

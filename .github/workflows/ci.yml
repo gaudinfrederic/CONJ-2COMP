@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: ["master", "main"]
+  pull_request:
+    branches: ["master", "main"]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile verifier (C99, warnings + sanitizers)
+        run: gcc -O2 -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -o verificateur verificateur.c
+
+      - name: Verify run_petit (must pass)
+        run: ./verificateur 100000 run_petit
+
+      - name: Verify corrupt suite via C (all 4 must FAIL - detection tests)
+        run: |
+          for d in run_corrupt_rtable run_corrupt_skip run_corrupt_goulot run_corrupt_trunc; do
+            echo "== $d"
+            if ./verificateur 100000 $d; then
+              echo "ERROR: corrupted run accepted: $d"
+              exit 1
+            else
+              echo "corruption correctly detected: $d"
+            fi
+          done
+
+      - name: Install numpy
+        run: pip install numpy
+
+      - name: Python verifier on run_petit
+        run: python verificateur.py 100000 run_petit
+
+      - name: Verify corrupt suite via Python (all 4 must FAIL)
+        run: |
+          for d in run_corrupt_rtable run_corrupt_skip run_corrupt_goulot run_corrupt_trunc; do
+            echo "== $d"
+            if python verificateur.py 100000 $d; then
+              echo "ERROR: corrupted run accepted: $d"
+              exit 1
+            else
+              echo "corruption correctly detected: $d"
+            fi
+          done
+
+      - name: Validate CITATION.cff
+        run: |
+          pip install cffconvert
+          cffconvert --validate -i CITATION.cff
+
+      - name: Check shipped digests
+        run: sha256sum -c SHA256SUMS.txt
