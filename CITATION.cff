@@ -4,7 +4,7 @@ title: "Verification certifiee du digraphe de re-pairage sur partitions de Goldb
 authors:
   - family-names: Gaudin
     given-names: Frederic
-    affiliation: Universite de Caen Normandie
+    orcid: 'https://orcid.org/0009-0005-3308-9261'
 version: 1.0.0
 date-released: 2026-11-17
 # depot mixte : code Apache-2.0 (LICENSE-CODE) +
@@ -22,4 +22,4 @@ keywords:
   - certificats SHA-256
   - theorie des nombres
   - reproducibilite
-doi: 10.5281/zenodo.24335185
+doi: 10.5281/zenodo.24350578

@@ -356,4 +356,21 @@ theorem dense_coverage
 #print axioms dense_combinatorial
 #print axioms dense_coverage
 
+
+/-- Finite power-sum inequality over Nat weights, q >= 1 :
+    (sum_x in C w x)^q <= C.card^{q-1} * sum_x in C (w x)^q.
+    Wrapper du lemme Mathlib pow_sum_le_card_mul_sum_pow
+    (convention exposant n+1 / n ; passage par R car IsStrictOrderedRing
+    est requis). Utilise dans le renforcement q-moment de thm:dense. -/
+theorem pow_sum_le_card_pow_pred_mul_sum_pow
+    (C : Finset Nat) (w : Nat → Nat) (q : Nat) (hq : 1 ≤ q) :
+    (∑ x ∈ C, w x) ^ q ≤ C.card ^ (q - 1) * ∑ x ∈ C, w x ^ q := by
+  rcases q with _ | n
+  · omega
+  · rw [Nat.add_sub_cancel]
+    have hR : (∑ x ∈ C, (w x : ℝ)) ^ (n + 1)
+        ≤ (C.card : ℝ) ^ n * ∑ x ∈ C, (w x : ℝ) ^ (n + 1) :=
+      pow_sum_le_card_mul_sum_pow (fun i _ => Nat.cast_nonneg _) n
+    exact_mod_cast hR
+
 end Conj2comp
