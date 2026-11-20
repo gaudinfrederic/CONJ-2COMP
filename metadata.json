@@ -26,7 +26,7 @@
     "number theory",
     "reproductibilite"
   ],
-  "version": "1.0.0",
+  "version": "1.1.1",
   "related_identifiers": [
     {
       "identifier": "https://oeis.org/A061357",
@@ -52,5 +52,6 @@
     "data:certFormat": "RT2C/PU2C/GO2C v1, spec dans SPECS_CERTS.md",
     "data:coverageInterval": "m <= 1000000, niveaux k <= 14089",
     "data:measurements": "a(k) in {2,3} k>=3 ; 674/674 goulots pont-mort avec N>=1 ; 0 puits interieur"
-  }
+  },
+  "publication_date": "2026-11-19"
 }

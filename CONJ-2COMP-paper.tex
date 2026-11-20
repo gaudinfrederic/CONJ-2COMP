@@ -34,9 +34,8 @@
 
 \title{Sinks in the levels of the Goldbach re-pairing digraph:\\
 a mod-3 valve, extremal-ray bridges, and a $\{2,3\}$ oscillation}
-\author{F.~Gaudin\thanks{Universit\'e de Caen Normandie, France.
-Email: \href{mailto:frederic.gaudin@unicaen.fr}{\texttt{frederic.gaudin@unicaen.fr}}.}}
-\date{November 2026}
+\author{F.~Gaudin\thanks{Email: \href{mailto:frederic.gaudin@unicaen.fr}{\texttt{frederic.gaudin@unicaen.fr}}.}}
+\date{\today}
 
 \begin{document}
 \maketitle
@@ -69,7 +68,12 @@ into $0 \pmod p$; (ii) a \emph{unique crossing mechanism}: descending
 arcs between $1 \pmod 3$ and $2 \pmod 3$ arise solely from the
 extremal ray $m-3$, present if and only if $2m-3$ is prime; (iii)
 \emph{well-count certificates} on the residue-class minima modulo~$3$
-of $V_k$, together with downward finiteness of each level; (iv) a
+of $V_k$, together with downward finiteness of each level, and an
+unconditional analytic support for their measured premise: below
+every large vertex $m \not\equiv 0 \pmod 3$, some multiple of $3$
+attains at least $2 - o(1)$ times the Hardy--Littlewood richness
+prediction, reducing the premise to a parity-barrier upper bound;
+(iv) a
 \emph{prime-quadruple characterisation} of descending adjacency;
 and (v) \emph{local Schnirelmann coverage}: every dyadic interval
 $[X,2X]$ ($X \ge X_0$) contains a vertex $m$ whose descending
@@ -132,10 +136,16 @@ modulus $p \ge 5$ (Proposition~\ref{thm:pgates}), the descent ceiling
 bijection (Theorem~\ref{thm:bij}) and the trivial bound
 (Lemma~\ref{lem:bound}). The dense $\Delta$-coverage of a rich
 vertex (Theorem~\ref{thm:dense}) is unconditional; its sieve
-inputs \eqref{eq:HA}--\eqref{eq:HC} in Section~\ref{sec:dense} are
+inputs \eqref{eq:HA} and \eqref{eq:HBq} in Section~\ref{sec:dense} are
 discharged inside the proof via Halberstam--Richert~\cite[Theorem~5.7]{hr}
 and an elementary local-factor bound; its combinatorial skeleton is
-kernel-verified in the Lean artefact (Appendix~\ref{app:lean}). All
+kernel-verified in the Lean artefact (Appendix~\ref{app:lean}).
+The neutral domination of the class $0 \bmod 3$
+(Theorem~\ref{thm:neudom}) is unconditional, building on the
+circle-method framework of~\cite{mv,vaughan}; the resulting reduction
+of the measured premise $\mu_0(k) < \min(\mu_1(k),\mu_2(k))$ to the
+upper-bound hypothesis~\eqref{eq:Ueta} is conditional
+(Corollary~\ref{cor:parity}). All
 \emph{global} bounds ($|\wells(\Dk)| \le 3$ on the whole of $\N$)
 follow \emph{unconditionally} from the margin conjecture
 (Conjecture~\ref{conj:M}, Proposition~\ref{prop:master}); the
@@ -151,8 +161,9 @@ explicitly.
 
 \noindent\emph{Outline.} Section~\ref{sec:defs} gives the
 definitions;
-Section~\ref{sec:mod3} the mod-3 mechanism and the well
-certificates (the autonomous theorems); Section~\ref{sec:bij} the
+Section~\ref{sec:mod3} the mod-3 mechanism, the well
+certificates and the neutral domination
+(Subsection~\ref{sec:neudom}); Section~\ref{sec:bij} the
 bottleneck bijection and bounds; Section~\ref{sec:mcut} the finite
 reduction; Section~\ref{sec:data} the exhaustive data;
 Section~\ref{sec:osc} the $\{2,3\}$ oscillation and dense
@@ -244,7 +255,12 @@ $\rch(n) \ge k$.
 \begin{remark}[$\Delta$-arcs versus $\Sigma$-arcs]\label{rem:dsarc}
 The two descending children of a pair $a < b$ in $\rays(m)$ play
 different geometric roles. Since $1 \le a < b \le m - 3$ share
-the parity opposite to $m$ (so $a \ge 2$ when $m$ is odd), the
+the parity opposite to $m$ (so $a \ge 2$ when $m$ is odd, and
+$(a, b) = (1, 3)$ is excluded for even $m \ge 6$: the residues
+$m - 3, m - 1, m + 1, m + 3 \bmod 3$ cover every class, and the
+only multiple of $3$ available as prime is $m - 1 = 3$ or
+$m - 3 = 3$, i.e.\ $m \le 6$, where $3 \notin \rays(6)$
+directly), the
 \emph{difference arc} lands at
 \[
 n_\Delta \;=\; m - \tfrac{b-a}{2} \;\in\;
@@ -434,10 +450,11 @@ $X \to \infty$.
 \section{The mod-3 mechanism}
 \label{sec:mod3}
 
-Everything in this section is unconditional (ZFC) and, except for
-the certificates' measured regime, fully structural; the main
-statements are formally verified in Lean~4
-(Appendix~\ref{app:lean}).
+Everything in this section up to Subsection~\ref{sec:neudom} is
+unconditional (ZFC) and, except for the certificates' measured
+regime, fully structural, with its main statements formally verified
+in Lean~4 (Appendix~\ref{app:lean}); Subsection~\ref{sec:neudom}
+adds an unconditional analytic bound and a conditional corollary.
 
 \begin{lemma}[ray classes modulo $3$]\label{lem:ray3}
 Let $m \ge 4$.
@@ -467,8 +484,10 @@ $m + t = 2m - 3 \equiv 0 \pmod 3$, composite for $m > 3$.
 No descending arc goes from a charged vertex to a neutral vertex:
 for $m \not\equiv 0 \pmod 3$, every descending child $n \in C^{-}(m)$
 satisfies $n \equiv m \pmod 3$ or $n \equiv 2m \pmod 3$, never
-$n \equiv 0 \pmod 3$. Consequently each charged fibre is closed
-under descent, while the neutral fibre \emph{leaks}: every ray pair
+$n \equiv 0 \pmod 3$. Consequently the union of the two charged
+fibres is closed under descent (each fibre individually is closed
+only at dead-bridge vertices), while the neutral fibre
+\emph{leaks}: every ray pair
 $a < b$ of a neutral parent emits one neutral and one charged
 descending child (via its $\Sigma$-child when $a \equiv b \pmod 3$
 and via its $\Delta$-child when $a \equiv -b \pmod 3$; no extremal
@@ -594,7 +613,7 @@ For every prime $p \ge 5$ and every class
 $c \in (\mathbb{Z}/p\mathbb{Z})^{\times}$ there are infinitely
 many $m \equiv c \pmod p$ emitting a descending arc $m \to n$
 with $n \equiv 0 \pmod p$. Consequently $p = 3$ is the unique
-prime whose non-zero classes are downward-closed.
+prime whose union of non-zero classes is downward-closed.
 \end{proposition}
 
 \begin{proof}
@@ -626,13 +645,15 @@ $\int_0^1 S_1(\alpha) S_4(\alpha) S_2(-\alpha) S_3(-\alpha)\,\dd\alpha$
 counts solutions to $q_1 + q_4 = q_2 + q_3$. Split the circle into
 the standard major arcs $\mathfrak{M}$ (the union of the boxes
 $q \le (\ln X)^{C_0}$, $|\alpha - a/q| \le (\ln X)^{C_0}/X$,
-$(a, q) = 1$, with $C_0$ a fixed constant) and the complementary
+$(a, q) = 1$, with $C_0 = C_0(B)$ chosen after $B$) and the
+complementary
 minor arcs $\mathfrak{m}$. On
 $\mathfrak{m}$, $\sup_{\alpha \in \mathfrak{m}} |S_j(\alpha)| \ll X
-\ln^{-B} X$ for $j = 1, 2$ (Vinogradov--Siegel--Walfisz in the fixed
-progression mod $6p$, with $B$ at our disposal in terms of the
-target exponent and all implied constants allowed to depend on
-$p$), while each $S_j$ is supported on primes
+\ln^{-B} X$ for $j = 1, 2$ (fix $B$ to the target exponent
+first --- say $B = 3$, so that $2B > 4$ --- then take
+$C_0 = C_0(B)$ large enough for Vinogradov--Siegel--Walfisz in the
+fixed progression mod $6p$ to deliver it, all implied constants
+allowed to depend on $p$), while each $S_j$ is supported on primes
 $\le X$, so Parseval gives $\int_0^1 |S_j(\alpha)|^2\,\dd\alpha \ll X$;
 pulling out $\sup_{\mathfrak{m}} |S_1 S_2|$ and applying
 Cauchy--Schwarz to the remaining bilinear integral,
@@ -795,6 +816,288 @@ neutral $9$ leaks to $8$ and the charged $10$ reaches $8$ across an
 alive bridge ($2\cdot 10 - 3 = 17$), leaving $\{8\}$ as the sole
 window well, the exception $a^{\mathrm{win}}(2) = 1$ of
 Table~\ref{tab:wells}.
+\end{remark}
+
+\subsection{Neutral domination below charged vertices}
+\label{sec:neudom}
+
+Remark~\ref{rem:regime} leaves the positional premise
+$\mu_0(k) < \min(\mu_1(k),\mu_2(k))$ as a measured fact. We now give
+its analytic content: unconditionally, below every sufficiently
+large charged vertex the class $0 \bmod 3$ attains a richness
+exceeding \emph{twice} the Hardy--Littlewood prediction, and the
+measured regime would follow from a \emph{pure upper bound} on the
+richness of charged vertices---no Goldbach lower bound is required.
+
+Write
+\[
+r_{\mathrm{HL}}(m) \;=\;
+\mathfrak{S}_2(2m)\,\frac{m}{(\ln 2m)^{2}},
+\qquad
+s(m) \;=\; \prod_{\substack{\ell \ge 3 \\ \ell \mid m}}
+\frac{\ell - 1}{\ell - 2},
+\]
+so that $\mathfrak{S}_2(2m) = 2 C_2\, s(m)$; the conjectural order of
+$\rch(m)$ is $r_{\mathrm{HL}}(m)$.
+
+\begin{lemma}[arithmetic thickening]\label{lem:thick}
+Let $m \ge 4$ with $3 \nmid m$, let $y \to \infty$ subject to
+$y \le \frac{1}{2}\ln m$, and set
+\[
+d(m) \;=\; 3 \prod_{\substack{\ell \mid m \\ 5 \le \ell \le y}} \ell .
+\]
+Then $d \le \exp\bigl((1+o(1))y\bigr)$ (in particular $d = m^{o(1)}$
+when $y = o(\ln m)$), and every multiple $m'$ of $d$ satisfies
+\[
+s(m') \;\ge\; \Bigl(2 - O\Bigl(\frac{\ln(\ln m / y)}{\ln\ln m}\Bigr)\Bigr)\, s(m).
+\]
+\end{lemma}
+
+\begin{proof}
+We have $d \le 3\prod_{\ell \le y} \ell
+= \exp((1+o(1))y)$ by the prime number theorem. Every
+$m' = j d$ contains the prime divisors of $d$, and any additional odd
+prime divisor of $j$ only increases $s$, so $s(m') \ge s(d)$. Since
+$3 \nmid m$,
+\[
+\frac{s(m)}{s(d)}
+\;=\; \frac{1}{2} \prod_{\substack{\ell \mid m \\ \ell > y}}
+\frac{\ell - 1}{\ell - 2}.
+\]
+The distinct primes $> y$ dividing $m$ have product $\le m$;
+since $\ell \mapsto (\ell-1)/(\ell-2)$ is decreasing, the product
+is maximised when they are consecutive primes in $(y, z]$ with
+$\vartheta(z) - \vartheta(y) \le \ln m$, which since
+$y \le \frac{1}{2}\ln m$ forces
+$\vartheta(z) \le (\tfrac{3}{2}+o(1))\ln m$ and hence $z \le 2\ln m$
+for large $m$. By Mertens' theorem
+($\sum_{\ell \le x}\ln\frac{\ell-1}{\ell-2} = \ln\ln x + C + O(1/\ln x)$,
+where the constant $C$ cancels in the difference),
+\[
+\prod_{\substack{\ell \mid m \\ \ell > y}} \frac{\ell-1}{\ell-2}
+\;\le\;
+\exp\Bigl(\ln\ln(2\ln m) - \ln\ln y + O\Bigl(\frac{1}{\ln y}\Bigr)\Bigr)
+\;=\; \frac{\ln\ln m}{\ln y}\Bigl(1 + O\Bigl(\frac{1}{\ln y}\Bigr)\Bigr).
+\]
+Since $y \to \infty$ and $y \le \frac{1}{2}\ln m$ imply both
+$\ln(\ln m/y) \ge \ln 2$ and
+$1/\ln y \ll \ln(\ln m/y)/\ln\ln m$, we obtain
+$s(m') \ge s(d) \ge 2\,s(m)\bigl(\ln y/\ln\ln m\bigr)\bigl(1 - O(1/\ln y)\bigr)
+= \bigl(2 - O(\frac{\ln(\ln m/y)}{\ln\ln m})\bigr)s(m)$
+as claimed.
+\end{proof}
+
+\begin{remark}[ancestry of the thickening]
+\label{rem:thickanc}
+Thickening a candidate's small prime factors to boost its
+singular series is the device introduced for consecutive-prime
+gaps by Erd\H{o}s and Straus~\cite{erdosstraus} and used for
+jumping champions in~\cite{goldstonledoan}; the averaged
+singular-series factor over a fixed modulus is studied
+in~\cite{ikedasuriajaya}. The new input here is the pointwise
+unconditional bound: the circle-method exceptional set supplies
+the lower champion $m'$ in ZFC, with no $k$-tuple hypothesis.
+\end{remark}
+
+\begin{theorem}[neutral domination, unconditional]
+\label{thm:neudom}
+There exists $M_0$ such that for every $m \ge M_0$ with
+$3 \nmid m$,
+\[
+\max_{\substack{m' < m \\ 3 \mid m'}} \rch(m')
+\;\ge\;
+\Bigl(2 - O\Bigl(\frac{\ln\ln\ln m}{\ln\ln m}\Bigr)\Bigr)\,
+r_{\mathrm{HL}}(m).
+\]
+Under GRH the rate improves to $2 - O(1/\ln\ln m)$.
+In particular the left
+maximum exceeds $(2-\varepsilon)\,r_{\mathrm{HL}}(m)$ for any
+fixed $\varepsilon > 0$ once $m \ge M_0(\varepsilon)$.
+\end{theorem}
+
+\begin{proof}[Proof (sketch)]
+We do \emph{not} quote the final exceptional-set theorem
+of~\cite{mv} as a black box: its statement delivers only
+$R(n) > 0$ outside $\ll X^{1-\delta}$ exceptions, because at
+polynomial height $P = X^{\delta_0}$ the Gallagher zero-sum on the
+major arcs remains a positive constant $\exp(-c/\delta_0)$, and a
+possible Siegel character contributes a second main term
+$-\chi_1(-1)\,\mathfrak{S}_{\chi_1}(n)\,I_{\beta_1}(n)$. We
+therefore run the circle method at the subpolynomial level, where
+$\ln m/\ln P \to \infty$. Let $S(\alpha) = \sum_{n \le 2m}
+\Lambda(n)\,e(n\alpha)$, and dissect $[0,1]$ into the usual major
+arcs $\mathfrak{M}(P) = \bigcup_{q \le P}\bigcup_{(a,q)=1}
+\{|\alpha - a/q| \le P/(2qm)\}$ and the minor arcs
+$\mathfrak{m}(P)$.
+
+Set
+\[
+y \;=\; \frac{\ln m}{\ln\ln m},
+\qquad
+U \;=\; \frac{2\,\ln m}{\ln\ln m},
+\qquad
+P \;=\; e^{U} \;=\; m^{o(1)},
+\]
+$T = P^{3} \ll m^{1/10}$, and let $d$ be the arithmetic module of
+Lemma~\ref{lem:thick} ($d \le e^{(1+o(1))y} = m^{o(1)}$).
+
+\emph{Minor arcs.} By Dirichlet's lemma every
+$\alpha \in \mathfrak{m}(P)$ admits $P < q \le 2m/P$ with
+$|\alpha - a/q| \le P/(q\cdot 2m)$, so Vaughan's bound
+\cite[Theorem~3.1]{vaughan} gives
+$\sup_{\mathfrak{m}(P)} |S(\alpha)| \ll m\,P^{-1/2}(\ln m)^{4}$
+\emph{for every} $1 \le P \le m^{2/5}$, with no polynomiality
+requirement on $P$. Parseval
+$\int_0^{1} |S|^{2} = \sum_{n \le 2m} \Lambda(n)^{2} \ll m\ln m$
+then yields
+$\sum_{n \le m} |R_{\mathfrak{m}}(2n)|^{2} \ll
+m^{3}P^{-1}(\ln m)^{9}$, hence taking the threshold
+$m/(\ln m)^{2}$, the minor-arc contribution exceeds
+$m/(\ln m)^{2}$ on at most
+$\ll mP^{-1}(\ln m)^{13}$ even integers $2n \le 2m$.
+
+\emph{Major arcs.} Expanding $S(a/q + \beta)$ into Dirichlet
+characters modulo $q \le P$ and truncating the explicit formula at
+height $T = P^{3}$, the contribution of all non-exceptional zeros
+is bounded through Gallagher's density lemma
+\cite[Lemma~4.3]{mv} by
+$\exp\bigl(-c_1 \frac{\ln m}{\ln(P T)}\bigr)
+= \exp\bigl(-\frac{c_1}{4}\frac{\ln m}{\ln P}\bigr)
+= \exp\bigl(-\frac{c_1}{8}\,\ln\ln m\bigr)
+= (\ln m)^{-c_1/8}$,
+which is $o(1)$: it is precisely the subpolynomial choice
+$P = m^{o(1)}$, i.e.\ $\ln m/\ln P \to \infty$, that turns this
+constant into $o(1)$ (this is the single point where the
+polynomial scale of \cite{mv} would fail). If an exceptional modulus
+$q_1 \le P$ with $\beta_1 > 1 - c_0/\ln(PT)$ exists, the effective
+Landau--Page bound $1 - \beta_1 \gg q_1^{-1/2}(\ln q_1)^{-2}$
+gives $q_1^{1/2}(\ln q_1)^{2} \gg \ln P$, i.e.\
+$\ln q_1 \ge (2 - o(1))\ln\ln m$; since the odd part of the
+conductor $q_1$ is squarefree, $\vartheta\bigl(P^{+}(q_1)\bigr)
+\ge \ln(q_1/8)$ and its largest prime factor satisfies
+$p^{\ast} = P^{+}(q_1) \ge (2 - o(1))\ln\ln m$ (in particular
+$p^{\ast} \ge 5$). Replacing $d$ by $d' = d/\gcd(d, p^{\ast})$
+loses at most a factor $1 - O(1/p^{\ast}) = 1 - O(1/\ln\ln m)$ in
+$s(d')$, and restricting to multiples $m' = j d'$ with
+$p^{\ast} \nmid j$ ensures $p^{\ast} \mid q_1$ while
+$p^{\ast} \nmid 2m'$, which bounds the exceptional singular series
+by $|\mathfrak{S}_{\chi_1}(2m')| \le \mathfrak{S}_2(2m')/(p^{\ast}-2)
+= O(\mathfrak{S}_2(2m')/\ln\ln m)$ via \cite[Lemma~5.2]{mv}; the
+same $c_{p^{\ast}}(-2m') = -1$ suppresses the quadratic
+$\chi_1^{2}$ contribution as well as the cross term
+$\chi_0\chi_1$, so both exceptional pieces die by the same
+factor $1/(p^{\ast} - 2)$ (when no
+exceptional modulus exists, set $d' = d$ and omit the $p^{\ast}$
+condition).
+
+\emph{Assembly.} The minor-arc exceptional bound holds \emph{globally}
+over $[1, m]$, so a plain pigeonhole suffices---no congruence
+restriction is imposed on the circle method. In the short window
+$[m - H, m)$ with $H = m/\ln m$, the multiples $m' = j d'$ with
+$p^{\ast} \nmid j$ number
+$(1 - 1/p^{\ast}) H/d' + O(1) \gg m\,e^{-(1+o(1))y}/\ln m$,
+while the minor-arc bad set excludes at most
+$\ll m\,P^{-1}(\ln m)^{13}$ integers in $[1, m]$; since
+$d'\ln m\cdot P^{-1}(\ln m)^{13} \le
+m^{(-1 + o(1))/\ln\ln m}(\ln m)^{14} \to 0$, some admissible
+$m' = j d'$ escapes the minor-arc exceptional set:
+$3 \mid m'$, $m' = \bigl(1 - O(1/\ln m)\bigr)m$, $p^{\ast} \nmid m'$,
+and
+$R(2m') = \bigl(1 + O(1/\ln\ln m)\bigr)\,\mathfrak{S}_2(2m')\,2m'$
+(the $O(m/(\ln m)^{2})$ minor-arc error is absorbed since
+$\mathfrak{S}_2(2m') \ge 4C_2 \gg 1$). Since $p + q = 2m'$ implies
+$pq \le m'^{2}$, AM--GM gives
+$\ln p\,\ln q \le (\ln m')^{2} < (\ln 2m')^{2}$, and discarding
+prime powers $O(\sqrt{m'}\ln^{2} m')$ yields
+$\rch(m') \ge \bigl(1 - O(1/\ln\ln m)\bigr)\,r_{\mathrm{HL}}(m')$
+directly for the unordered pairs $p < q$. Finally
+$s(m') \ge s(d') \ge \bigl(1 - O(1/\ln\ln m)\bigr) s(d)
+\ge \bigl(2 - O(\frac{\ln\ln\ln m}{\ln\ln m})\bigr)s(m)$, so
+\[
+\rch(m') \;\ge\; \bigl(2 - O(\ln\ln\ln m/\ln\ln m)\bigr)\,
+r_{\mathrm{HL}}(m) .
+\]
+Under GRH there is no exceptional character and the polynomial
+scale $P = m^{1/5}$ is available, so $y = c\ln m$ with
+$0 < c < \tfrac15$ gives $2 - O(1/\ln\ln m)$.
+\end{proof}
+
+\begin{remark}[an elementary main-term variant]\label{rem:elementary}
+Lemma~\ref{lem:thick} alone, with $y = \frac{1}{2}\ln m$, already
+gives the same domination on the \emph{Hardy--Littlewood main
+term} with no analytic input at all: $d \le e^{(1+o(1))y}
+= m^{1/2 + o(1)}$, so $m' = d\lfloor(m-1)/d\rfloor \in (m - d, m)$
+satisfies $m'/m = 1 - O(m^{-1/2 + o(1)})$ and
+$\ln(\ln m/y) = \ln 2$, hence
+\[
+\mathfrak{S}_2(2m')\frac{m'}{(\ln m')^{2}}
+\;\ge\;
+\Bigl(2 - O\Bigl(\tfrac{1}{\ln\ln m}\Bigr)\Bigr)\,
+\mathfrak{S}_2(2m)\frac{m}{(\ln m)^{2}} .
+\]
+Thus the recipe (the singular series) is dominated unconditionally
+in four lines; Theorem~\ref{thm:neudom} is the additional statement
+that the dish (the actual count $\rch$) exists.
+\end{remark}
+
+
+\begin{remark}[status of the ingredients]\label{rem:mvstatus}
+The inputs are the minor-arc bound of
+\cite[Theorem~3.1]{vaughan} (valid at every height
+$P \le m^{2/5}$, polynomial or not) and the major-arc treatment
+of~\cite{mv} at the subpolynomial level displayed above; the
+boxed exceptional-set theorem of~\cite{mv} alone would not
+suffice. The constant $M_0(\varepsilon)$ is \emph{effective}:
+the only exceptional-zero input is the effective
+Landau--Page bound $1 - \beta_1 \gg q_1^{-1/2}(\ln q_1)^{-2}$
+--- the ineffective Siegel theorem is never invoked, the
+$p^{\ast}$-surgery having been designed to avoid it. The theorem is deliberately \emph{one-sided}: it bounds
+from below the \emph{maximum} of $\rch$ over multiples of $3$
+below $m$, never the value of $\rch(m)$ itself.
+\end{remark}
+
+\begin{corollary}[reduction to the upper parity barrier]
+\label{cor:parity}
+Suppose the hypothesis
+\begin{equation}\label{eq:Ueta}\tag{$U_\eta$}
+\rch(m) \;\le\; (2 - \eta)\, r_{\mathrm{HL}}(m)
+\qquad (m \ge M_1(\eta),\ 3 \nmid m)
+\end{equation}
+holds for some $\eta > 0$. Then
+$\mu_0(k) < \min(\mu_1(k),\mu_2(k))$ for every $k \ge k_0(\eta)$,
+and hence $a(k) \ge 2$ for all large $k$ by
+Theorem~\ref{thm:cert2}.
+\end{corollary}
+
+\begin{proof}
+Let $\varepsilon = \eta/2$ and let $k$ be large enough that
+$\min(\mu_1(k),\mu_2(k)) \ge \max(M_0(\varepsilon), M_1(\eta))$
+(possible since every $\mu_c(k) \to \infty$: only finitely many $m$
+have bounded richness). Assume for contradiction that
+$\min(\mu_1(k),\mu_2(k)) = m \le \mu_0(k)$ with $3 \nmid m$ and
+$\rch(m) \ge k$. By Theorem~\ref{thm:neudom} there exists $m' < m$
+with $3 \mid m'$ and
+\[
+\rch(m') \;\ge\; (2-\varepsilon)\,r_{\mathrm{HL}}(m)
+\;\ge\; \frac{2-\varepsilon}{2-\eta}\,\rch(m)
+\;>\;
+k,
+\]
+using \eqref{eq:Ueta}. Thus $m' \in \Vk \cap \{v \equiv 0 \pmod 3\}$
+with $m' < m \le \mu_0(k)$, contradicting the minimality of
+$\mu_0(k)$.
+\end{proof}
+
+\begin{remark}[what remains open]\label{rem:openparity}
+Hypothesis \eqref{eq:Ueta} is unproved: the linear upper sieve
+supplies only the constant $\approx 4$ (the parity barrier of
+Remarks~\ref{rem:densesize} and~\ref{rem:walls}), while the required
+bound is $< 2$. Theorem~\ref{thm:neudom} nevertheless reduces the
+measured regime of Remark~\ref{rem:regime} to a single explicit
+upper-bound conjecture, and shows that the obstruction is exactly
+the factor $2$ gap between the sieve constant and the mod-$3$
+local advantage, not the difficulty of producing rich multiples of
+$3$.
 \end{remark}
 
 \section{The bottleneck: bijection and bounds}
@@ -1313,7 +1616,7 @@ below it:
 \[
 \bigl|C_\Delta^{-}(m)\bigr|
 \;\ge\; \max\Bigl\{\, c_1\, m,\;
-\frac{c_2\, m}{(\ln\ln m)^{6}} \,\Bigr\}
+\frac{c_2\, m}{(\ln\ln\ln m)^{2}} \,\Bigr\}
 \]
 for absolute constants $c_1, c_2 > 0$ (the first term dominates
 asymptotically; the second, explicit in the sieve constants, is
@@ -1373,15 +1676,18 @@ primorials, so no choice of centre skipping it would leave an
 absolute constant below.
 
 \smallskip
-\noindent\emph{Step 2 (combinatorial identity).}
+\noindent\emph{Step 2 (combinatorial identity, arbitrary power).}
 Each unordered pair $a < b$ of rays produces the $\Delta$-child
 $n = m - (b-a)/2$; let $w_\Delta(m,n)$ count the pairs generating
-$n$, so $\binom{\rch(m)}{2} = \sum_n w_\Delta(m,n)$ and
-Cauchy--Schwarz on the support gives
-\begin{equation}\label{eq:D1}\tag{D1}
+$n$, so $\binom{\rch(m)}{2} = \sum_n w_\Delta(m,n)$. For every
+integer $q \ge 2$, the polynomial inequality
+$\bigl(\sum_{n \in C} w(n)\bigr)^{q} \le |C|^{\,q-1}
+\sum_{n \in C} w(n)^{q}$ on the support $C = C_\Delta^{-}(m)$
+(pure convexity, no real exponents) gives
+\begin{equation}\label{eq:D1q}\tag{D$_q$}
 \bigl|C_\Delta^{-}(m)\bigr|
- \;\ge\; \frac{\binom{\rch(m)}{2}^{2}}
- {\displaystyle\sum_{n < m} w_\Delta(m,n)^{2}} .
+ \;\ge\; \frac{\binom{\rch(m)}{2}^{q/(q-1)}}
+ {\displaystyle\Bigl(\sum_{n < m} w_\Delta(m,n)^{q}\Bigr)^{1/(q-1)}} .
 \end{equation}
 
 \smallskip
@@ -1408,16 +1714,20 @@ $\mathfrak{S}_4^{\mathrm{bn}}$ in Definition~\ref{def:bottleneck},
 $3 \nmid d$ is permitted here so $\nu_3(m,d) = 3$ can occur, in
 which case $\mathfrak{S}_4^{\Delta}(m,d) = 0$). The Selberg upper
 sieve of dimension $\kappa = 4$ for linear forms in one variable,
-applied at level $\xi = m^{1/2}(\ln m)^{-B}$ ($B \ge 4$,
+applied at level $\xi = m^{1/2}(\ln m)^{-B}$ ($B \ge 7$,
 \cite[Theorem~5.7]{hr}), bounds the quadruple count by
 \begin{equation}\label{eq:HA}\tag{$H_A$}
 w_\Delta(m,n) \;\le\; (384 + O(\ln\ln m/\ln m))\,
 \mathfrak{S}_4^{\Delta}(m, d)\, \frac{m}{\ln^{4} m}
-\;+\; O\bigl(m\,(\ln m)^{3-2B}\bigr) ,
+\;+\; O\bigl(m\,(\ln m)^{6-2B}\bigr) ,
 \end{equation}
 uniformly in $d$: the additive term is the sieve remainder
-$\sum_{[d_1,d_2] < \xi^{2}} 4^{\omega([d_1,d_2])}
-\ll \xi^{2}(\ln \xi)^{3} = m(\ln m)^{3-2B}$ (dominating the
+$\sum_{d_1, d_2 < \xi}\mu^{2}(d_1)\mu^{2}(d_2)\,
+4^{\omega([d_1,d_2])}$, and
+$4^{\omega([d_1,d_2])} \le 4^{\omega(d_1) + \omega(d_2)}$
+factorizes it into
+$\bigl(\sum_{d < \xi}\mu^{2}(d)\,4^{\omega(d)}\bigr)^{2}
+\ll \xi^{2}(\ln \xi)^{6} = m(\ln m)^{6-2B}$ (dominating the
 $\le 8\xi$ values of $a$ where some $|L_i(a)| \le \xi$), while
 the system resultant
 $|E| = 64\, m^{2} d^{2} (m^{2} - d^{2}) \ne 0$ satisfies
@@ -1437,96 +1747,137 @@ every $p$, $\mathfrak{S}_4^{\Delta}(m,d) > 0$, and
 \cite[Theorem~5.7]{hr} applies literally.
 
 \smallskip
-\noindent\emph{Step 4 (second moment and sup bound, unconditional).}
-Comparing the local factors $\mathrm{loc}_4^{\Delta}(p;m,d)$ with
-$\mathrm{loc}_2(p;m)^{2}$, the combined ratio across $p \in \{2,3\}$
-is at most $2 \cdot 3 = 6$ (namely $8/4 = 2$ at $p = 2$ and at most
-$27/9 = 3$ at $p = 3$); for $p \ge 5$ it is $\le 1$ unless
-$p \mid d(m - d)(m + d)$, in which case it is $\le p/(p-2)$. Hence
-pointwise
-$\mathfrak{S}_4^{\Delta}(m, d) \le 6\,\mathfrak{S}_2(2m)^{2}\,
-f(d)\, f(m-d)\, f(m+d)$ with
-$f(k) = \prod_{p \mid k,\, p \ge 5} p/(p-2)$. Since
-$f(k)^{6} = \sum_{r \mid k} g(r)$ with
-$g(p) = (p/(p-2))^{6} - 1 \sim 12/p$ ($g \ge 0$ on squarefree
-$r$), the triple H\"older inequality bounds
-$\sum_{1 \le d < m/2} (f(d)f(m-d)f(m+d))^{2}$ by the geometric mean
-of the three disjoint partial sums $\sum_{d < m/2} f(d)^{6}$,
-$\sum_{d < m/2} f(m-d)^{6}$ and $\sum_{d < m/2} f(m+d)^{6}$, hence
-\emph{a fortiori} by one third of the total over $k < 3m/2$
-(arithmetic--geometric mean), giving the prefactor $6^{2}/3 = 12$
-of \eqref{eq:HB}; and
-$\sum_{k \le Y} f(k)^{6} = \sum_{r \le Y} g(r)\lfloor Y/r\rfloor
-\le Y\sum_{r \ge 1} g(r)/r$:
-\begin{equation}\label{eq:HB}\tag{$H_B$}
-\sum_{1 \le d < m/2} \mathfrak{S}_4^{\Delta}(m, d)^{2}
- \;\le\; 12\,\mathfrak{S}_2(2m)^{4}
- \sum_{k < 3m/2} f(k)^{6}
- \;\le\; 18\, C_6\, m\,\mathfrak{S}_2(2m)^{4},
-\qquad C_6 = \prod_{p \ge 5}\Bigl(1 + \frac{g(p)}{p}\Bigr)
- \approx 17.5 .
+\noindent\emph{Step 4 ($q$-th moment of the singular series,
+unconditional).} Set
+$\rho_p(m,d) = \mathrm{loc}_4^{\Delta}(p;m,d)/
+\mathrm{loc}_2(p;m)^{2}$. A case check on the root count
+$\nu_p(m,d)$ gives $\rho_2 = 2$ identically; at $p = 3$ the
+combined factor $\rho_2\rho_3$ equals $6$ on the class
+$3 \mid d$ (about $m/6$ points of the range $d < m/2$;
+elsewhere $\mathfrak{S}_4^{\Delta}(m,d) = 0$ when $3 \nmid m$,
+resp.\ $\le 3/2$ when $3 \mid m$, so the $p \in \{2,3\}$
+contribution sums in each case to $\le 6^{q-1} m$); and for
+$p \ge 5$,
+\[
+\rho_p(m,d) \;=\;
+\begin{cases}
+p/(p-1) & p \mid m,\ p \mid d,\\
+p(p-2)/(p-1)^{2} & p \mid m,\ p \nmid d,\\
+p/(p-2) & p \nmid m,\ p \mid d,\\
+p(p-3)/(p-2)^{2} & p \nmid m,\ p \mid (m-d)(m+d),\\
+p(p-4)/(p-2)^{2} & \text{otherwise.}
+\end{cases}
+\]
+On $5$-rough squarefree integers define
+$f_1(d)^{q} = \sum_{r \mid d,\, (r,6) = 1} h_1(r)$ with
+$h_1(p) = (p/(p-2))^{q} - 1$, and
+$f_2(k)^{q} = \sum_{r \mid k,\, (r,6m) = 1} h_2(r)$ with
+$h_2(p) = (p(p-3)/(p-2)^{2})^{q} - 1$; since the omitted cases have
+$\rho_p < 1$,
+$\prod_{p \ge 5} \rho_p(m,d)^{q} \le
+f_1(d)^{q} f_2(m-d)^{q} f_2(m+d)^{q}$ pointwise. Expanding the
+three divisor sums, a triple $(r_1,r_2,r_3)$ with a single witness
+$d$ is pairwise coprime (a prime dividing two components would
+divide $m$ or $2m$, against $(r_1,6) = 1$ and
+$(r_2 r_3, 6m) = 1$), hence fixes a unique class modulo
+$r_1 r_2 r_3$ inside each class modulo $3$, contributing
+$\le m/(6 r_1 r_2 r_3) + 1$ values of $d < m/2$. The main term is
+therefore bounded by the Euler product
+\[
+\frac{m}{6} \prod_{p \ge 5}
+\Bigl(1 + \frac{h_1(p) + 2 h_2(p)}{p}\Bigr)
+\;=\; \frac{m}{6}\,\widetilde C_q,
+\qquad
+\widetilde C_q \;=\; \prod_{p \ge 5}
+\Bigl(1 + \frac{\bigl(\frac{p}{p-2}\bigr)^{q}
+ + 2\bigl(\frac{p(p-3)}{(p-2)^{2}}\bigr)^{q} - 3}{p}\Bigr),
+\]
+convergent since $(h_1(p) + 2h_2(p))/p \sim 4q/p^{2}$; the $+1$
+box-count errors are absorbed by Rankin's trick at
+$\sigma = 1/4$, whose product
+$\prod_{p \ge 5} \bigl(1 + h_1(p)p^{-1/4}\bigr)
+= \exp\bigl(O(q\ln\ln q)\bigr)$ bounds each of the three divisor
+sums by $O_q(m^{1/4})$, giving a total additive error
+$O_q\!\bigl(m^{3/4}\bigr)$, which stays $o(m)$ even for
+$q = \lfloor \ln\ln m \rfloor$ since
+$\exp(O(q\ln\ln q))\,m^{3/4} = m^{4/5+o(1)}$. Hence
+\begin{equation}\label{eq:HBq}\tag{$H_{B,q}$}
+\sum_{1 \le d < m/2} \mathfrak{S}_4^{\Delta}(m, d)^{q}
+ \;\le\; \bigl(6^{\,q-1}\,\widetilde C_q + o_q(1)\bigr)\,
+ m\,\mathfrak{S}_2(2m)^{2q} .
 \end{equation}
-The same local-factor comparison also gives a uniform supremum
-bound: $f(k) \ll (\ln\ln k)^{2}$ (the product over distinct primes
-is maximised on initial segments, so
-$\ln f(k) \le \sum_{5 \le p \le y} 2/(p-2) + O(1)
-= 2\ln\ln y + O(1)$ with $y \sim \ln k$ by Mertens' theorem), hence
-uniformly in $1 \le d < m/2$,
-\begin{equation}\label{eq:HC}\tag{$H_C$}
-\mathfrak{S}_4^{\Delta}(m,d)
- \;\le\; C_s\,\mathfrak{S}_2(2m)^{2}\,(\ln\ln m)^{6},
+By Mertens' theorem the $q$-dependence is only polylogarithmic:
+\begin{equation}\label{eq:Cqest}
+\widetilde C_q^{\,1/(q-1)} \;\asymp\; (\ln q)^{2}
+\qquad (q \to \infty),
 \end{equation}
-with $C_s > 0$ absolute.
+the factors $> 1$ being confined to $p \lesssim 2q/\ln q$ while
+$\ln \prod_{p \le z} p/(p-2) = 2\ln\ln z + O(1)$ and the tail
+$p > 4q$ contributes $O(1/\ln q)$.
 
 \smallskip
-\noindent\emph{Step 5 (assembly).} Inserting \eqref{eq:HA} and
-\eqref{eq:HB} into \eqref{eq:D1} at the centre $m$ of Step~1
+\noindent\emph{Step 5 (assembly).} At the centre $m$ of Step~1
 ($\mathfrak{S}_2(2m) \le \Lambda$; also $w_\Delta(m,n) = 0$ for
-$d = m - n \ge m/2$, so the sum ranges over $1 \le d < m/2$ as in
-\eqref{eq:HB}) yields
+$d = m - n \ge m/2$), write $A_n = 384\,\mathfrak{S}_4^{\Delta}(m,d)
+\,m/\ln^{4} m$ for the main term of~\eqref{eq:HA} and
+$R = O(m(\ln m)^{-8})$ for its additive remainder at $B = 7$,
+uniform in $d$ (Step~3). Convexity applied to
+$A + R = (1-\theta)\frac{A}{1-\theta} + \theta\frac{R}{\theta}$
+with $\theta = 1/(1+q^{2})$ gives the two-term split
 \[
-\sum_{n < m} w_\Delta(m,n)^{2}
- \;\le\; (384 + o(1))^{2}\cdot 18\, C_6\, \Lambda^{4}\,
- \frac{m^{3}}{\ln^{8} m} ,
+(A+R)^{q} \;\le\; \bigl(1+q^{-2}\bigr)^{q-1} A^{q}
+ \;+\; \bigl(1+q^{2}\bigr)^{q-1} R^{q},
 \]
-the additive $O(m(\ln m)^{3-2B})$ of \eqref{eq:HA} (which is
-$O(m/\ln^{5} m)$ for $B \ge 4$) contributing through the
-cross-term $O(m^{3}/\ln^{9} m) = o(m^{3}/\ln^{8} m)$ only; thus
+with $(1+q^{-2})^{q-1} = 1 + O(1/q)$. Summing the first term via
+\eqref{eq:HBq} at $\mathfrak{S}_2(2m) \le \Lambda$, and the second
+over $d < m/2$ to
+$\ll m\bigl(2q^{2} R\bigr)^{q}
+\ll \bigl(\frac{m}{\ln^{4} m}\bigr)^{q} m\,(\ln m)^{-4q}
+(\ln\ln m)^{2q}$ (negligible even at $q = \lfloor\ln\ln m\rfloor$),
+yields
 \[
-\bigl|C_\Delta^{-}(m)\bigr| \;\ge\;
-\frac{\binom{\rch(m)}{2}^{2}\,\ln^{8} m}
- {(384 + o(1))^{2}\, 18\, C_6\, \Lambda^{4}\, m^{3}} ,
+\sum_{n < m} w_\Delta(m,n)^{q}
+ \;\le\; \bigl(1 + O(q^{-1})\bigr)\,
+ 384^{q}\, 6^{q-1}\,\widetilde C_q\,\Lambda^{2q}\,
+ \frac{m^{q+1}}{\ln^{4q} m} .
 \]
-and, taking $X_0$ large enough so that
-$\rch(m) \ge c_0 m/\ln^{2} m \ge 2$, the bound
-$\binom{\rch(m)}{2} \ge \rch(m)^{2}/4 \ge
-c_0^{2} m^{2}/(4\ln^{4} m)$ gives
-$\bigl|C_\Delta^{-}(m)\bigr| \ge c_1\, m$ with
-\[
-c_1 \;=\; \frac{c_0^{4}}
- {7.5 \times 10^{8}\, \Lambda^{4}} \;>\; 0
-\quad\text{absolute}
-\]
-($16 \times 384^{2} \times 18\, C_6 \approx 7.44 \times 10^{8} <
-7.5 \times 10^{8}$, absorbing the $o(1)$ for $X \ge X_0$; the
-$\mathfrak{S}_2(2m)^{4}$ of \eqref{eq:HB} is replaced by
-$\Lambda^{4}$, a pure number, thanks to the
-bounded-singular-series choice of $m$). A second, sup-norm
-assembly avoids squaring the sieve constant altogether: by the
-fibre identity, $\sum_{n<m} w_\Delta(m,n)^{2} \le
-(\max_{n<m} w_\Delta(m,n))\cdot\binom{\rch(m)}{2}$, and combining
-\eqref{eq:HA} with \eqref{eq:HC} gives
-$\max_{n<m} w_\Delta(m,n) \le
-(384 + o(1))\,C_s\,\Lambda^{2}(\ln\ln m)^{6}\,m/\ln^{4}m$
-(the additive error $O(m\ln^{-5}m)$ of \eqref{eq:HA} being absorbed
-again); hence, absorbing the $o(1)$ for $X \ge X_0$ into the margin
-$384 \to 385$,
+Since
+$\binom{\rch(m)}{2} = \bigl(\tfrac{1}{2} - o(1)\bigr)\,\rch(m)^{2}
+\ge \bigl(\tfrac{1}{2} - o(1)\bigr)\,c_0^{2}\,m^{2}/\ln^{4}m$ at
+$X \ge X_0$, inserting into \eqref{eq:D1q} gives, after cancellation
+of the powers of $m$ and $\ln m$,
+\begin{equation}\label{eq:C1q}
+\bigl|C_\Delta^{-}(m)\bigr|
+ \;\ge\; \frac{(1 - o_q(1))\,m}
+ {768^{\,q/(q-1)}\, 6\,\widetilde C_q^{\,1/(q-1)}\,
+ (\Lambda/c_0)^{\,2q/(q-1)}} ,
+\end{equation}
+where $768 = 2 \times 384$ merges the $(1/2)^{q/(q-1)}$ of the
+numerator with the sieve constant.
+
+\emph{Regime (a): fixed $q$.} For every fixed integer $q \ge 2$
+this is a linear Schnirelmann bound
+$\bigl|C_\Delta^{-}(m)\bigr| \ge c_1(q)\,m$; the exponents
+$q/(q-1) \to 1$ recover the first powers $384\,\Lambda^{2}$ up to
+the polylogarithmic factor \eqref{eq:Cqest}, and the saddle point
+$q/\ln q \approx \tfrac{1}{2}\ln\!\bigl(768\,(\Lambda/c_0)^{2}\bigr)$
+sits at $q \approx 32$ for $\Lambda/c_0 \approx 1\,200$, where
+$c_1^{-1} \approx 4.9\times 10^{10}$.
+
+\emph{Regime (b): dynamic $q(m) = \lfloor \ln\ln m \rfloor$.} All
+error terms stay uniform in $d$ and $o(1)$-relative: the
+multiplicative sieve error raises as
+$\bigl(1 + O(\ln\ln m/\ln m)\bigr)^{q/(q-1)} = 1 + o(1)$, the
+$(1+q^{-2})^{q-1}$ split factor tends to $1$, the powered remainder
+is negligible as computed above, and
+$768^{\,q/(q-1)} \to 768$,
+$(\Lambda/c_0)^{2q/(q-1)} \to (\Lambda/c_0)^{2}$ while
+$\widetilde C_q^{\,1/(q-1)} \asymp (\ln\ln\ln m)^{2}$; hence
 \[
 \bigl|C_\Delta^{-}(m)\bigr|
-\;\ge\; \frac{\binom{\rch(m)}{2}}{\max_{n<m} w_\Delta(m,n)}
-\;\ge\; \frac{c_0^{2}}{4\cdot 385\, C_s\,\Lambda^{2}}\,
-\frac{m}{(\ln\ln m)^{6}}
-\;=\; \frac{c_2\,m}{(\ln\ln m)^{6}} ,
+ \;\ge\; \frac{c_0^{2}}{C'\cdot 384\,\Lambda^{2}}\,
+ \frac{m}{(\ln\ln\ln m)^{2}}
+ \;=\; \frac{c_2\,m}{(\ln\ln\ln m)^{2}} ,
 \]
 completing the proof of both bounds.
 \end{proof}
@@ -1535,15 +1886,22 @@ completing the proof of both bounds.
 \label{rem:densesize}
 In the second bound of Theorem~\ref{thm:dense}, $384$ enters only
 to the \emph{first} power and $\mathfrak{S}_2(2m)$ only as
-$\Lambda^{2}$, at the price of $(\ln\ln m)^{6}$: it dominates
-$c_1 m$ below a double-exponential threshold, and remains
+$\Lambda^{2}$, at the price of $(\ln\ln\ln m)^{2}$: the dynamic
+choice $q = \lfloor \ln\ln m \rfloor$ in~\eqref{eq:D1q} suppresses
+the parasitic $\Lambda^{2}$ and $384$ powers that the former
+$q = 2$ instance squared ($c_1(2)^{-1} =
+768^{2}\cdot 6\,\widetilde C_2\,(\Lambda/c_0)^{4}$, now
+$768^{\,q/(q-1)}\,6\widetilde C_q^{\,1/(q-1)}
+(\Lambda/c_0)^{2q/(q-1)}$, a gain of order $3\times 10^{8}$ on
+$c_1$ at the saddle point $q \approx 32$). The second bound
+dominates $c_1 m$ below a triple-exponential threshold, and remains
 non-trivial whenever $\rch(m) \ge c_0 m/\ln^{2} m$. Note further
 that the proof uses only the Selberg sieve on $\mathbb{Z}$ and
 Chebyshev's bound (no Dirichlet characters and no
 Bombieri--Vinogradov theorem~\cite{bombieri,vinogradovA}), so $c_1$,
 $c_2$, and $X_0$ are \emph{effective in principle} (free of
-Siegel-zero ineffectivity). Heuristically, replacing the H\"older
-majorant in~\eqref{eq:HB} by the expected local second moment
+Siegel-zero ineffectivity). Heuristically, replacing the majorant
+in~\eqref{eq:HBq} at $q = 2$ by the expected local second moment
 $\sum_{d<m/2} \mathfrak{S}_4^{\Delta}(m,d)^{2} \sim
 (\kappa_4(m)/2)\, m\,\mathfrak{S}_2(2m)^{4}$ would raise $c_1$ to
 the order of $c_0^{4}\Lambda^{-4}/(8\kappa_4(m)\cdot 384^{2}) \approx
@@ -1567,14 +1925,15 @@ parity barrier.
 The combinatorial part of Theorem~\ref{thm:dense} is
 machine-verified by the Lean artefact (Appendix~\ref{app:lean},
 zero \texttt{sorry}): strict descent of $\Delta$-children, the
-fibre identity and the pair count by swap symmetry, support
-Cauchy--Schwarz~\eqref{eq:D1}, and the final assembly. In the
-artefact the sieve bounds \eqref{eq:HA} and \eqref{eq:HB} appear as
-explicit parameters, never as axioms; the proof above discharges
-them through \cite[Theorem~5.7]{hr} and the elementary local-factor
-estimate, so the theorem as stated is unconditional. The additional
-input~\eqref{eq:HC} is discharged by the same local-factor estimate
-and is used only in the paper-side sup-norm assembly. What the
+fibre identity and the pair count by swap symmetry, the support
+power inequality~\eqref{eq:D1q} (in the artefact at $q = 2$, via
+support Cauchy--Schwarz; the universal integer-$q$ form is a short
+polynomial lemma over $\mathbb{N}$, independent of real
+exponentiation), and the final assembly. In the artefact the sieve
+bounds \eqref{eq:HA} and \eqref{eq:HBq} appear as explicit
+parameters, never as axioms; the proof above discharges them
+through \cite[Theorem~5.7]{hr} and the elementary local-factor
+estimate, so the theorem as stated is unconditional. What the
 kernel certifies is therefore exactly the non-analytic skeleton of
 the theorem.
 \end{remark}
@@ -2046,7 +2405,7 @@ $[2L_k, 2L_k + Y]$ with $Y \asymp (\ln(2m))^{2}\ln\ln(2m)$, giving
 the conjectural contraction
 \[
 \Phi_k^{-}(m) \;\le\; L_k +
-C\,\frac{(\ln(2m))^{2}}{\ln\ln(2m)},
+C\,(\ln(2m))^{2}\ln\ln(2m),
 \qquad
 h_k(m) \;=\; \ln^{\ast} m + O_k(1),
 \]
@@ -2225,17 +2584,22 @@ Lean axioms \texttt{propext}, \texttt{Classical.choice}, and
       and the assembly theorem \texttt{dense\_coverage} yielding
       $|C_\Delta^{-}(m)| \ge
       c_0^4\, m \big/ \bigl(16 K^2 K_M \mathfrak{S}_2(2m)^4\bigr)$
-      under the sieve inputs \eqref{eq:HA} and \eqref{eq:HB} passed
+      under the sieve inputs \eqref{eq:HA} and \eqref{eq:HBq}
+      (at $q = 2$) passed
       as explicit parameters (never as axioms).
 \end{itemize}
 
 \paragraph{Interface notes for \texttt{ThmDense.lean}.}
 In Section~\ref{sec:dense}, the parameters of \texttt{dense\_coverage}
 are discharged at $K = 384$ (\cite[Theorem~5.7]{hr}) and
-$K_M = 18\, C_6$ (Step~4), while Step~1 supplies a centre $m$ with
-$\mathfrak{S}_2(2m) \le \Lambda$; the $(\ln\ln m)^6$-defect bound
+$K_M = 6\,\widetilde C_2$ (Step~4 at $q = 2$), while Step~1 supplies
+a centre $m$ with
+$\mathfrak{S}_2(2m) \le \Lambda$; the $(\ln\ln\ln m)^2$-defect bound
 uses the same verified fibre identity together with the paper-side
-supremum estimate~\eqref{eq:HC}. Two formalisation conventions
+dynamic choice $q = \lfloor \ln\ln m \rfloor$ (the artefact
+certifies the support inequality at $q = 2$; its universal
+integer-$q$ form is a short polynomial lemma). Two formalisation
+conventions
 bridge the Lean signatures and the text:
 \begin{enumerate}
 \item \emph{Pair filtering and threshold guards.} The finite set
@@ -2256,11 +2620,11 @@ bridge the Lean signatures and the text:
       \texttt{SecondMomentHypothesis} sums $\mathtt{S4}(n,m)^2$ over
       all $0 \le n < m$ (i.e.\ \texttt{Finset.range m}). To
       instantiate these hypotheses from \eqref{eq:HA} and
-      \eqref{eq:HB}, one sets $\mathtt{S4}(n,m) = 0$ for
+      \eqref{eq:HBq}, one sets $\mathtt{S4}(n,m) = 0$ for
       $n \le \lfloor m/2 \rfloor$ (where $w_\Delta(m,n) = 0$ by
       Remark~\ref{rem:dsarc}) and defines $\mathtt{S4}(n,m)$ for
       $d = m - n < m/2$ as the effective majorant absorbing the
-      $o(1)$ and the additive remainder $O(m(\ln m)^{3-2B})$
+      $o(1)$ and the additive remainder $O(m(\ln m)^{6-2B})$
       of~\eqref{eq:HA} (which also covers the degenerate points
       $\nu_3(m,d) = 3$ where $\mathfrak{S}_4^{\Delta}(m,d) = 0$
       while $w_\Delta(m,n) \le 8$, such as $w_\Delta(8,7) = 1$).
@@ -2288,7 +2652,7 @@ files \texttt{ak\_bfile.txt} and \texttt{m1\_bfile.txt}, and the
 complete Lean~4 artefact are provided in the ancillary archive
 (\texttt{CONJ-2COMP-ancillary.tar.gz}) permanently bundled with the
 preprint deposit of this manuscript and archived for persistent open
-access on Zenodo (DOI: \texttt{10.5281/zenodo.24350578}) and Software
+access on Zenodo (DOI: \texttt{10.5281/zenodo.24364009}) and Software
 Heritage upon publication.
 
 \section*{Use of AI tools}
@@ -2335,10 +2699,21 @@ graphs and the Goldbach graph}, Discrete Mathematics
 H.~Dubner, \emph{Twin prime conjecture}, Journal of Recreational
 Mathematics \textbf{30} (1999--2000), no.~3, 199--205.
 
+\bibitem{erdosstraus}
+P.~Erd\H{o}s and E.~G.~Straus, \emph{Remarks on the differences
+between consecutive primes}, Elemente der Mathematik \textbf{35}
+(1980), no.~5, 115--118.
+
+\bibitem{goldstonledoan}
+D.~A.~Goldston and A.~H.~Ledoan, \emph{The jumping champion
+conjecture}, Mathematika \textbf{61} (2015), no.~3, 719--740;
+\href{https://arxiv.org/abs/1102.4879}{arXiv:1102.4879} [math.NT].
+
 \bibitem{granville}
 A.~Granville, \emph{Refinements of Goldbach's conjecture, and the
 generalized Riemann hypothesis}, Functiones et Approximatio
-Commentarii Mathematici \textbf{37} (2007), 159--173.
+Commentarii Mathematici \textbf{37} (2007), 159--173; Corrigendum,
+ibid.\ \textbf{38} (2008), no.~2, 235--237.
 
 \bibitem{greentao}
 B.~Green and T.~Tao, \emph{Linear equations in primes}, Annals
@@ -2361,6 +2736,13 @@ L.-K.~Hua, \emph{Additive Theory of Prime Numbers},
 Translations of Mathematical Monographs \textbf{13}, American
 Mathematical Society, Providence, RI, 1965.
 
+\bibitem{ikedasuriajaya}
+K.~Ikeda and A.~I.~Suriajaya, \emph{The average number of
+Goldbach representations over multiples of $q$}, Functiones et
+Approximatio Commentarii Mathematici \textbf{73} (2025), no.~2,
+169--183;
+\href{https://arxiv.org/abs/2405.04315}{arXiv:2405.04315} [math.NT].
+
 \bibitem{kak}
 S.~Kak, \emph{Goldbach partitions and sequences}, Resonance
 \textbf{19} (2014), no.~11, 1028--1037.
@@ -2373,6 +2755,10 @@ conjecture}, preprint (2026);
 \bibitem{maier}
 H.~Maier, \emph{Primes in short intervals}, Michigan Mathematical
 Journal \textbf{32} (1985), no.~2, 221--225.
+
+\bibitem{mv}
+H.~L.~Montgomery and R.~C.~Vaughan, \emph{The exceptional set in
+Goldbach's problem}, Acta Arithmetica \textbf{27} (1975), 353--370.
 
 \bibitem{oeis}
 OEIS Foundation Inc., \emph{The On-Line Encyclopedia of Integer

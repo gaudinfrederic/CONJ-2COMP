@@ -1,6 +1,6 @@
 # CONJ-2COMP - verification certifiee du digraphe de re-pairage
 
-DOI Zenodo : `10.5281/zenodo.24350578`
+DOI Zenodo : `10.5281/zenodo.24364009`
 
 Certificats computationnels et code de verification pour la
 structure de niveaux du digraphe de re-pairage sur les

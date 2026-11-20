@@ -5,8 +5,8 @@ authors:
   - family-names: Gaudin
     given-names: Frederic
     orcid: 'https://orcid.org/0009-0005-3308-9261'
-version: 1.0.0
-date-released: 2026-11-17
+version: 1.1.1
+date-released: 2026-11-19
 # depot mixte : code Apache-2.0 (LICENSE-CODE) +
 # donnees/documents CC-BY-4.0 (LICENSE-DATA) - mapping : NOTICE
 license:
@@ -22,4 +22,4 @@ keywords:
   - certificats SHA-256
   - theorie des nombres
   - reproducibilite
-doi: 10.5281/zenodo.24350578
+doi: 10.5281/zenodo.24364009
